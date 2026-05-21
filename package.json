@@ -1,0 +1,10 @@
+{
+  "name": "low-altitude-h5",
+  "version": "1.0.0",
+  "description": "低空智联网技术专业招生H5 - 昆明航空职业学院",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}
