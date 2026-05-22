@@ -1,63 +1,52 @@
-export default async function handler(request) {
- // 设置 CORS 头
- const corsHeaders = {
- 'Access-Control-Allow-Origin': '*',
- 'Access-Control-Allow-Methods': 'POST, OPTIONS',
- 'Access-Control-Allow-Headers': 'Content-Type',
- };
+export default async function handler(req, res) {
+ res.setHeader('Access-Control-Allow-Origin', '*');
+ res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+ res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
- // 处理预检请求
- if (request.method === 'OPTIONS') {
- return new Response(null, { status: 200, headers: corsHeaders });
+ if (req.method === 'OPTIONS') {
+ return res.status(200).end();
  }
 
- if (request.method !== 'POST') {
- return new Response(JSON.stringify({ error: 'Method not allowed' }), {
- status: 405,
- headers: { ...corsHeaders, 'Content-Type': 'application/json' }
- });
+ if (req.method !== 'POST') {
+ return res.status(405).json({ error: 'Method not allowed' });
  }
+
+ let body = req.body;
+ if (typeof body === 'string') {
+ try { body = JSON.parse(body); } catch(e) { /* ignore */ }
+ }
+ const { message } = body || {};
+ 
+ if (!message) {
+ return res.status(400).json({ error: 'Message required' });
+ }
+
+ const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
+ if (!DEEPSEEK_API_KEY) {
+ return res.status(500).json({ error: 'API key not configured' });
+ }
+
+ const SYSTEM_PROMPT = `你是"低空向导"，昆明航空职业学院低空智联网技术专业的智能招生问答助手。
+专业代码510311，2026年首届招生。
+核心信息：
+- 专业特色：无人机+物联网+AI三技术融合，建低空数字基础设施
+- 就业方向：低空交通管制(7-9k)、无人机运维(6-8k)、数据采集分析(7-10k)、智慧城市应用(8-12k)
+- 证书体系：CAAC执照为核心，大一基础证书→大二CAAC→大三专项拓展
+- 云南特色：边境安防、高原农业、智慧旅游
+- 升学通道：职教本科代码10305，应届7-9k，3-5年可至15k+
+回答风格：简洁直接，先给结论再给论据，用数据说话，不堆砌修饰。`;
 
  try {
- const { message } = await request.json();
-
- if (!message) {
- return new Response(JSON.stringify({ error: 'Message is required' }), {
- status: 400,
- headers: { ...corsHeaders, 'Content-Type': 'application/json' }
- });
- }
-
- const systemPrompt = `你是低空智联网技术专业的智能招生助手，代号"低空向导"。
-你的职责：
-1. 回答关于低空智联网技术专业的问题
-2. 介绍专业课程、就业方向、薪资待遇
-3. 解答家长和考生的疑虑
-
-专业信息：
-- 专业代码：510311
-- 学制：3年专科
-- 核心技术：无人机 + 物联网 + AI
-- 就业方向：无人机飞手、物联网工程师、AI应用开发、低空经济运营
-- 薪资范围：应届6k-9k，3-5年15k+
-- 落地院校：昆明航空职业学院
-
-回答要求：
-- 热情专业，像学长/学姐一样亲切
-- 用具体数据和案例说话
-- 每次回答控制在200字以内
-- 适当用emoji增加亲和力`;
-
- const response = await fetch('https://api.deepseek.com/chat/completions', {
+ const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
  method: 'POST',
  headers: {
  'Content-Type': 'application/json',
- 'Authorization': `Bearer ${process.env.DEEPSEEK_API_KEY}`
+ 'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
  },
  body: JSON.stringify({
  model: 'deepseek-chat',
  messages: [
- { role: 'system', content: systemPrompt },
+ { role: 'system', content: SYSTEM_PROMPT },
  { role: 'user', content: message }
  ],
  max_tokens: 500,
@@ -65,23 +54,20 @@ export default async function handler(request) {
  })
  });
 
+ const data = await response.json();
+
  if (!response.ok) {
- throw new Error(`DeepSeek API error: ${response.status}`);
+ console.error('DeepSeek API error:', JSON.stringify(data));
+ return res.status(response.status).json({ 
+ error: 'AI service error', 
+ details: data.error?.message || JSON.stringify(data)
+ });
  }
 
- const data = await response.json();
- const reply = data.choices[0]?.message?.content || '抱歉，我暂时无法回答';
-
- return new Response(JSON.stringify({ reply }), {
- status: 200,
- headers: { ...corsHeaders, 'Content-Type': 'application/json' }
- });
-
- } catch (error) {
- console.error('Chat error:', error);
- return new Response(JSON.stringify({ error: '服务器内部错误' }), {
- status: 500,
- headers: { ...corsHeaders, 'Content-Type': 'application/json' }
- });
+ const reply = data.choices?.[0]?.message?.content || '抱歉，暂时无法回复';
+ res.status(200).json({ reply });
+ } catch (err) {
+ console.error('Chat error:', err.message);
+ res.status(500).json({ error: 'Service error', details: err.message });
  }
 }
