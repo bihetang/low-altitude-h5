@@ -13,17 +13,17 @@ export default async function handler(req, res) {
 
  let body = req.body;
  if (typeof body === 'string') {
- try { body = JSON.parse(body); } catch(e) { /* ignore */ }
+ try { body = JSON.parse(body); } catch(e) { body = {}; }
  }
  const { message } = body || {};
  
  if (!message) {
- return res.status(400).json({ error: 'Message required' });
+ return res.status(400).json({ reply: '请输入消息' });
  }
 
  const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
  if (!DEEPSEEK_API_KEY) {
- return res.status(500).json({ error: 'API key not configured' });
+ return res.status(500).json({ reply: '⚠️ API密钥未配置' });
  }
 
  const SYSTEM_PROMPT = `你是"低空向导"，昆明航空职业学院低空智联网技术专业的智能招生问答助手。
@@ -55,19 +55,23 @@ export default async function handler(req, res) {
  });
 
  const data = await response.json();
+ console.log('DeepSeek response:', JSON.stringify(data));
 
  if (!response.ok) {
- console.error('DeepSeek API error:', JSON.stringify(data));
  return res.status(response.status).json({ 
- error: 'AI service error', 
- details: data.error?.message || JSON.stringify(data)
+ reply: '⚠️ AI服务异常: ' + (data.error?.message || response.statusText)
  });
  }
 
- const reply = data.choices?.[0]?.message?.content || '抱歉，暂时无法回复';
- res.status(200).json({ reply });
+ const reply = data.choices?.[0]?.message?.content;
+ 
+ if (!reply || reply.trim() === '') {
+ return res.status(200).json({ reply: '（AI暂无回复，请换个问题试试）' });
+ }
+ 
+ res.status(200).json({ reply: reply.trim() });
  } catch (err) {
  console.error('Chat error:', err.message);
- res.status(500).json({ error: 'Service error', details: err.message });
+ res.status(500).json({ reply: '❌ 服务异常: ' + err.message });
  }
 }
