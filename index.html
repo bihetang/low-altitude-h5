@@ -141,13 +141,13 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: msg })
-      }).then(function(r) { return r.json(); }).then(function(data) {
-        loadDiv.textContent = data.reply;
-        sending = false;
-      }).catch(function() {
-        loadDiv.textContent = '网络异常，请稍后重试';
-        sending = false;
-      });
+     }).then(function(r) { return r.json(); }).then(function(data) {
+ loadDiv.textContent = data.reply || data.error || '（无回复）';
+ sending = false;
+ }).catch(function(err) {
+ loadDiv.textContent = '网络异常: ' + (err.message || '请稍后重试');
+ sending = false;
+ });
     }
 
     function appendMsg(cls, text) {
