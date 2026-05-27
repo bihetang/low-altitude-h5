@@ -8,7 +8,7 @@ export default async function handler(req, res) {
  }
 
  if (req.method !== 'POST') {
- return res.status(405).json({ error: 'Method not allowed' });
+ return res.status(405).json({ reply: '请求方式错误' });
  }
 
  let body = req.body;
@@ -21,8 +21,8 @@ export default async function handler(req, res) {
  return res.status(400).json({ reply: '请输入消息' });
  }
 
- const DEEPSEEK_API_KEY = process.env.DEEPSEEK_API_KEY;
- if (!DEEPSEEK_API_KEY) {
+ const API_KEY = process.env.DEEPSEEK_API_KEY;
+ if (!API_KEY) {
  return res.status(500).json({ reply: '⚠️ API密钥未配置' });
  }
 
@@ -37,14 +37,14 @@ export default async function handler(req, res) {
 回答风格：简洁直接，先给结论再给论据，用数据说话，不堆砌修饰。`;
 
  try {
- const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+ const response = await fetch('https://api.siliconflow.cn/v1/chat/completions', {
  method: 'POST',
  headers: {
  'Content-Type': 'application/json',
- 'Authorization': `Bearer ${DEEPSEEK_API_KEY}`
+ 'Authorization': `Bearer ${API_KEY}`
  },
  body: JSON.stringify({
- model: 'deepseek-chat',
+ model: 'deepseek-ai/DeepSeek-V3',
  messages: [
  { role: 'system', content: SYSTEM_PROMPT },
  { role: 'user', content: message }
@@ -55,7 +55,6 @@ export default async function handler(req, res) {
  });
 
  const data = await response.json();
- console.log('DeepSeek response:', JSON.stringify(data));
 
  if (!response.ok) {
  return res.status(response.status).json({ 
@@ -71,7 +70,6 @@ export default async function handler(req, res) {
  
  res.status(200).json({ reply: reply.trim() });
  } catch (err) {
- console.error('Chat error:', err.message);
  res.status(500).json({ reply: '❌ 服务异常: ' + err.message });
  }
 }
