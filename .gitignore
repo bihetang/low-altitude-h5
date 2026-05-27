@@ -1,3 +1,10 @@
 node_modules/
 server.log
 *.zip
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
