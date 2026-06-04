@@ -1,166 +1,98 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>低空智联网技术专业 - 昆明航空职业学院</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: #fff; min-height: 100vh; padding-bottom: 320px; }
-    .hero { padding: 60px 20px 40px; text-align: center; }
-    .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
-    .hero .code { color: #4a90d9; font-size: 16px; }
-    .hero .tagline { color: #8892b0; margin-top: 16px; font-size: 15px; }
-    .card { background: rgba(255,255,255,0.08); border-radius: 16px; margin: 20px; padding: 24px; }
-    .card h2 { font-size: 18px; color: #4a90d9; margin-bottom: 16px; }
-    .card .item { display: flex; align-items: flex-start; margin-bottom: 14px; }
-    .card .icon { width: 32px; height: 32px; background: rgba(74,144,217,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-size: 16px; flex-shrink: 0; }
-    .card .text { flex: 1; }
-    .card .label { color: #8892b0; font-size: 13px; }
-    .card .value { color: #fff; font-size: 15px; margin-top: 4px; }
-    .highlight { background: linear-gradient(135deg, #4a90d9 0%, #357abd 100%); color: #fff; border-radius: 16px; margin: 20px; padding: 24px; text-align: center; }
-    .highlight .big { font-size: 36px; font-weight: 700; }
-    .highlight .unit { font-size: 14px; color: rgba(255,255,255,0.7); }
-    .highlight .desc { font-size: 13px; margin-top: 8px; color: rgba(255,255,255,0.8); }
-    .jobs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px; }
-    .job { background: rgba(255,255,255,0.06); border-radius: 12px; padding: 16px; text-align: center; }
-    .job .name { font-size: 14px; color: #fff; }
-    .job .salary { font-size: 12px; color: #4a90d9; margin-top: 6px; }
-    .certs { margin: 20px; }
-    .cert-row { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
-    .cert { background: rgba(74,144,217,0.15); border: 1px solid rgba(74,144,217,0.3); border-radius: 8px; padding: 10px 14px; font-size: 13px; }
-    .cert.core { background: #4a90d9; color: #fff; }
-    .cta { margin: 30px 20px 20px; text-align: center; }
-    .cta-btn { background: linear-gradient(135deg, #4a90d9 0%, #357abd 100%); color: #fff; border: none; border-radius: 12px; padding: 16px 32px; font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; max-width: 300px; }
-    .cta-tip { font-size: 13px; color: #8892b0; margin-top: 12px; }
-    .footer { text-align: center; padding: 20px; color: #8892b0; font-size: 12px; }
-
-    /* Chat box - always visible at bottom */
-    .chat-box { position: fixed; bottom: 0; left: 0; right: 0; height: 300px; background: #16213e; border-radius: 16px 16px 0 0; display: flex; flex-direction: column; z-index: 999; box-shadow: 0 -4px 20px rgba(0,0,0,0.3); }
-    .chat-title { padding: 12px 16px; font-size: 15px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; }
-    .chat-title .close { background: none; border: none; color: #8892b0; font-size: 22px; cursor: pointer; padding: 0 4px; }
-    .chat-body { flex: 1; overflow-y: auto; padding: 12px 16px; }
-    .msg { margin-bottom: 10px; display: flex; }
-    .msg.from-user { justify-content: flex-end; }
-    .msg-bubble { max-width: 80%; padding: 8px 12px; border-radius: 12px; font-size: 14px; line-height: 1.5; white-space: pre-wrap; }
-    .msg.from-bot .msg-bubble { background: rgba(74,144,217,0.2); }
-    .msg.from-user .msg-bubble { background: #4a90d9; }
-    .chat-input { display: flex; padding: 10px 12px; gap: 8px; border-top: 1px solid rgba(255,255,255,0.1); }
-    .chat-input input { flex: 1; background: rgba(255,255,255,0.1); border: none; border-radius: 20px; padding: 10px 16px; color: #fff; font-size: 14px; outline: none; }
-    .chat-input input::placeholder { color: #8892b0; }
-    .chat-input button { background: #4a90d9; border: none; border-radius: 50%; width: 40px; height: 40px; color: #fff; font-size: 16px; cursor: pointer; flex-shrink: 0; }
-  </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>低空智联网技术专业 - 招生咨询</title>
+ <style>
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+ .chat-container { width: 100%; max-width: 400px; height: 80vh; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); display: flex; flex-direction: column; overflow: hidden; }
+ .chat-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; }
+ .chat-header h1 { font-size: 18px; margin-bottom: 5px; }
+ .chat-header p { font-size: 12px; opacity: 0.9; }
+ .chat-messages { flex: 1; overflow-y: auto; padding: 20px; background: #f5f5f5; }
+ .message { margin-bottom: 15px; display: flex; }
+ .message.bot { justify-content: flex-start; }
+ .message.user { justify-content: flex-end; }
+ .message-content { max-width: 70%; padding: 12px 16px; border-radius: 18px; font-size: 14px; line-height: 1.5; }
+ .message.bot .message-content { background: white; color: #333; border-bottom-left-radius: 4px; }
+ .message.user .message-content { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-bottom-right-radius: 4px; }
+ .chat-input { padding: 15px; background: white; border-top: 1px solid #eee; display: flex; gap: 10px; }
+ .chat-input input { flex: 1; padding: 12px 16px; border: 2px solid #eee; border-radius: 25px; outline: none; font-size: 14px; }
+ .chat-input input:focus { border-color: #667eea; }
+ .chat-input button { padding: 12px 24px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; cursor: pointer; font-size: 14px; font-weight: bold; }
+ .chat-input button:disabled { opacity: 0.5; cursor: not-allowed; }
+ </style>
 </head>
 <body>
-  <section class="hero">
-    <h1>低空智联网技术</h1>
-    <div class="code">专业代码 510311</div>
-    <div class="tagline">无人机 × 物联网 × AI<br>三技术融合，建低空数字基础设施</div>
-  </section>
-  <section class="highlight">
-    <div class="big">1.5<span class="unit">万亿</span></div>
-    <div class="desc">2025年低空经济规模<br>2030年预计达3.5万亿</div>
-  </section>
-  <section class="card">
-    <h2>🎓 学什么</h2>
-    <div class="item"><div class="icon">📡</div><div class="text"><div class="label">感知层</div><div class="value">物联网数据采集与传输</div></div></div>
-    <div class="item"><div class="icon">🧠</div><div class="text"><div class="label">决策层</div><div class="value">AI智能分析与调度</div></div></div>
-    <div class="item"><div class="icon">🛩️</div><div class="text"><div class="label">执行层</div><div class="value">无人机系统运维与操控</div></div></div>
-  </section>
-  <section class="jobs">
-    <div class="job"><div class="name">低空交通管控</div><div class="salary">起薪 7k-9k</div></div>
-    <div class="job"><div class="name">无人机运维</div><div class="salary">起薪 6k-8k</div></div>
-    <div class="job"><div class="name">数据采集分析</div><div class="salary">起薪 7k-10k</div></div>
-    <div class="job"><div class="name">智慧城市应用</div><div class="salary">起薪 8k-12k</div></div>
-  </section>
-  <section class="card">
-    <h2>📍 云南特色场景</h2>
-    <div class="item"><div class="icon">🛡️</div><div class="text"><div class="label">边境安防</div><div class="value">无人机巡边、低空监控网络</div></div></div>
-    <div class="item"><div class="icon">🌾</div><div class="text"><div class="label">高原农业</div><div class="value">精准植保、农业遥感监测</div></div></div>
-    <div class="item"><div class="icon">🏔️</div><div class="text"><div class="label">智慧旅游</div><div class="value">景区巡检、航拍服务、低空观光</div></div></div>
-  </section>
-  <section class="certs">
-    <h2 style="color:#4a90d9;margin-bottom:16px;font-size:18px;">📜 证书体系</h2>
-    <div class="cert-row"><div class="cert core">CAAC执照(核心)</div><div class="cert">AOPA合格证</div><div class="cert">1+X物联网</div></div>
-    <div class="cert-row"><div class="cert">无人机驾驶员</div><div class="cert">低空通信</div><div class="cert">智慧城市应用</div></div>
-    <p style="color:#8892b0;font-size:13px;margin-top:12px;">大一基础证书 → 大二CAAC核心 → 大三专项拓展</p>
-  </section>
-  <section class="card">
-    <h2>⬆️ 升学通道</h2>
-    <div class="item"><div class="icon">📈</div><div class="text"><div class="label">职业本科</div><div class="value">无人机系统工程、物联网工程、人工智能</div></div></div>
-    <div class="item"><div class="icon">💰</div><div class="text"><div class="label">薪资增长</div><div class="value">应届6k-9k → 3-5年可达15k+</div></div></div>
-  </section>
-  <section class="cta">
-    <button class="cta-btn" onclick="document.getElementById('qrm').style.display='flex'">📱 扫码关注公众号</button>
-    <div class="cta-tip">昆明航空职业学院 · 2026年首届招生</div>
-  </section>
-  <footer class="footer">教育部2025年底批准 · 职业本科代码310305<br>低空经济新赛道，抢占人才红利</footer>
+ <div class="chat-container">
+ <div class="chat-header">
+ <h1>🛩️ 低空智联网技术专业</h1>
+ <p>昆明航空职业学院 · 招生咨询助手</p>
+ </div>
+ <div class="chat-messages" id="messages">
+ <div class="message bot">
+ <div class="message-content">你好！欢迎咨询低空智联网技术专业，我是招生助手。有什么想了解的吗？</div>
+ </div>
+ </div>
+ <div class="chat-input">
+ <input type="text" id="userInput" placeholder="输入你的问题..." onkeypress="if(event.key==='Enter')sendMessage()">
+ <button onclick="sendMessage()" id="sendBtn">发送</button>
+ </div>
+ </div>
 
-  <!-- QR modal -->
-  <div id="qrm" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;" onclick="this.style.display='none'">
-    <div style="background:#fff;border-radius:16px;padding:24px;text-align:center;max-width:300px;" onclick="event.stopPropagation()">
-      <p style="color:#333;font-size:16px;margin-bottom:16px;">扫码关注公众号咨询</p>
-      <img src="qrcode.jpg" style="width:200px;height:200px;border-radius:8px;">
-      <p style="color:#8892b0;font-size:12px;margin-top:12px;">长按识别二维码</p>
-    </div>
-  </div>
+ <script>
+ function sendMessage() {
+ const input = document.getElementById('userInput');
+ const btn = document.getElementById('sendBtn');
+ const text = input.value.trim();
+ if (!text) return;
 
-  <!-- Chat - always visible -->
-  <div class="chat-box" id="chatBox">
-    <div class="chat-title">
-      <span>🛩️ 低空向导 - 智能咨询</span>
-      <button class="close" onclick="document.getElementById('chatBox').style.display='none'">✕</button>
-    </div>
-    <div class="chat-body" id="chatBody">
-      <div class="msg from-bot"><div class="msg-bubble">你好！我是低空向导 🛩️\n\n关于低空智联网技术专业，有什么想问的直接说。</div></div>
-    </div>
-    <div class="chat-input">
-      <input id="chatIn" placeholder="问我任何关于专业的问题..." autocomplete="off">
-      <button id="chatSend">➤</button>
-    </div>
-  </div>
+ input.value = '';
+ btn.disabled = true;
 
-  <script>
-    var sendBtn = document.getElementById('chatSend');
-    var chatIn = document.getElementById('chatIn');
-    var chatBody = document.getElementById('chatBody');
-    var sending = false;
+ const messages = document.getElementById('messages');
+ 
+ // 添加用户消息
+ const userDiv = document.createElement('div');
+ userDiv.className = 'message user';
+ userDiv.innerHTML = '<div class="message-content">' + text + '</div>';
+ messages.appendChild(userDiv);
 
-    sendBtn.addEventListener('click', doSend);
-    chatIn.addEventListener('keydown', function(e) { if (e.key === 'Enter') doSend(); });
+ // 添加加载提示
+ const loadingDiv = document.createElement('div');
+ loadingDiv.className = 'message bot';
+ loadingDiv.innerHTML = '<div class="message-content">正在思考...</div>';
+ messages.appendChild(loadingDiv);
+ messages.scrollTop = messages.scrollHeight;
 
-    function doSend() {
-      if (sending) return;
-      var msg = chatIn.value.trim();
-      if (!msg) return;
-      chatIn.value = '';
-      sending = true;
-      appendMsg('from-user', msg);
-      var loadDiv = appendMsg('from-bot', '思考中...');
-      fetch('https://1437681420-ivq4knj6m7.ap-guangzhou.tencentscf.com/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: msg })
-     }).then(function(r) { return r.json(); }).then(function(data) {
- loadDiv.textContent = data.reply || data.error || '（无回复）';
- sending = false;
- }).catch(function(err) {
- loadDiv.textContent = '网络异常: ' + (err.message || '请稍后重试');
- sending = false;
+ // 调用后端 API
+ fetch('https://1437681420-ivq4knj6m7.ap-guangzhou.tencentscf.com/chat', {
+ method: 'POST',
+ headers: { 'Content-Type': 'application/json' },
+ body: JSON.stringify({ message: text })
+ })
+ .then(res => res.json())
+ .then(data => {
+ loadingDiv.remove();
+ const botDiv = document.createElement('div');
+ botDiv.className = 'message bot';
+ botDiv.innerHTML = '<div class="message-content">' + (data.reply || '抱歉，我暂时无法回答。') + '</div>';
+ messages.appendChild(botDiv);
+ messages.scrollTop = messages.scrollHeight;
+ })
+ .catch(err => {
+ loadingDiv.remove();
+ const errDiv = document.createElement('div');
+ errDiv.className = 'message bot';
+ errDiv.innerHTML = '<div class="message-content">网络错误，请稍后再试。</div>';
+ messages.appendChild(errDiv);
+ })
+ .finally(() => {
+ btn.disabled = false;
  });
-    }
-
-    function appendMsg(cls, text) {
-      var d = document.createElement('div');
-      d.className = 'msg ' + cls;
-      var b = document.createElement('div');
-      b.className = 'msg-bubble';
-      b.textContent = text;
-      d.appendChild(b);
-      chatBody.appendChild(d);
-      chatBody.scrollTop = chatBody.scrollHeight;
-      return b;
-    }
-  </script>
+ }
+ </script>
 </body>
 </html>
